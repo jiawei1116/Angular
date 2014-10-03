@@ -49,6 +49,13 @@
            $scope.name = "demoCtrl5";
        });
     
+    demoApp.controller("demoCtrl6",function($scope){
+           $scope.users = [
+             {uid:'1', name:'allean1', phone:'111'}
+             ,{uid:'2', name:'allean2', phone:'222'}
+             ,{uid:'3', name:'allean3', phone:'333'}
+           ];
+       });
     
    </script>
 <body>
@@ -80,11 +87,19 @@
     </div>
   </div>
   
-  <div ng-controller="childCtrl1">
-      Child count-->{{data.count}}
-      <button ng-click="add()">+1</button>
-      <button ng-click="minus()">-1</button>
-    </div>
+  <div ng-controller="demoCtrl6">
+    {{users[0].name}}<br/>
+    {{users[1].name}}<br/>
+    {{users[2].name}}<br/>
+    <ul>
+      <li ng-repeat="user in users">
+        Name : {{user.name}}
+        Phone : {{user.phone}}
+        ,index:{{$index}},is first:{{$first}},is last:{{$last}}
+        ,is even:{{$even}}, is odd:{{$odd}}
+      </li>
+    </ul>
+  </div>
   
  
 </body>
