@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app="demoApp">
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+  <script>
+       var demoApp = angular.module("demoApp", []);
+       demoApp.controller("demoCtrl",function($scope){
+           $scope.data = ["A","B","C"];
+           $scope.add = function(){
+             $scope.data.push("D");
+           }
+       });
+    
+      demoApp.controller("demoCtrl2",function($scope){
+           $scope.name = "Allen";
+           $scope.changeName = function(){
+             $scope.name = "changeNameAllen";
+           };
+           
+           $scope.getAge = function(name){
+             if(name == "Allen") return 25;
+             else if(name =="others") return 30;
+             else return 15;
+           };
+        
+          $scope.reset = function(){
+            $scope.name = "Allen";
+          };
+       });
+    
+    demoApp.controller("parentCtrl1",function($scope){
+           //$scope.count = 1;
+            $scope.data={
+              count:1
+            };
+           $scope.add = function(){
+             $scope.data.count++;
+           };
+       });
+     demoApp.controller("childCtrl1",function($scope){
+           $scope.minus = function(){
+             $scope.data.count--;
+           };
+       });
+     demoApp.controller("demoCtrl5",function($scope){
+           $scope.name = "demoCtrl5";
+       });
+    
+    
+   </script>
+<body>
+  <div ng-controller="demoCtrl">
+    Count: {{data.length}}<br/>
+    Count: <font ng-bind="data.length"></font><br/>
+    <font ng-bind-template="Count:{{data.length}}"></font><br/>
+    Count: <input type="text" ng-model="data.length"><br/>
+    Count: <font ng-non-bindable="data.length"></font><br/>
+    <button ng-click="add()">ADD</button>
+  </div>
+  <div ng-controller="demoCtrl2">
+    name: {{name}}<br/>
+    <div>
+        again:{{name}}
+    </div>
+    <button ng-click="changeName()">change</button><br/>
+     <button ng-click="reset()">reset</button><br/>
+    getage : {{getAge(name)}}
+  </div>
+  <br/><br/><br/>
+  <div ng-controller="parentCtrl1">
+    Parent count-->{{data.count}}
+    <button ng-click="add()">+1</button>
+    <div ng-controller="childCtrl1">
+      Child count-->{{data.count}}
+      <button ng-click="add()">+1</button>
+      <button ng-click="minus()">-1</button>
+    </div>
+  </div>
+  
+  <div ng-controller="childCtrl1">
+      Child count-->{{data.count}}
+      <button ng-click="add()">+1</button>
+      <button ng-click="minus()">-1</button>
+    </div>
+  
+ 
+</body>
+</html>
