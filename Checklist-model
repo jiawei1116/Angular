@@ -1,0 +1,172 @@
+http://vitalets.github.io/checklist-model/
+Checklist-model
+AngularJS directive for list of checkboxes
+DownloadView on GitHub
+Why this is needed?
+In Angular one checkbox <input type="checkbox" ng-model="..."> is linked with one model.
+But in practice we usually want one model to store array of checked values from several checkboxes.
+Checklist-model solves that task without additional code in controller.
+You should play with attributes of <input type="checkbox"> tag:
+
+set checklist-model instead of ng-model
+set checklist-value - what should be picked as array item
+Please, try out demos below:
+
+Array of primitives
+demo
+ guest
+ user
+ customer
+ admin
+Check all  Uncheck all  Check first
+user.roles
+[
+  "user"
+]
+html
+<label ng-repeat="role in roles">
+  <input type="checkbox" checklist-model="user.roles" checklist-value="role"> {{role}}
+</label>
+js
+var app = angular.module("app", ["checklist-model"]);
+app.controller('Ctrl1', function($scope) {
+  $scope.roles = [
+    'guest', 
+    'user', 
+    'customer', 
+    'admin'
+  ];
+  $scope.user = {
+    roles: ['user']
+  };
+  $scope.checkAll = function() {
+    $scope.user.roles = angular.copy($scope.roles);
+  };
+  $scope.uncheckAll = function() {
+    $scope.user.roles = [];
+  };
+  $scope.checkFirst = function() {
+    $scope.user.roles.splice(0, $scope.user.roles.length); 
+    $scope.user.roles.push('guest');
+  };
+});
+Array of objects (pick id)
+demo
+ guest
+ user
+ customer
+ admin
+Check all  Uncheck all  Check first
+user.roles
+[
+  2,
+  4
+]
+html
+<label ng-repeat="role in roles">
+  <input type="checkbox" checklist-model="user.roles" checklist-value="role.id"> {{role.text}}
+</label>
+js
+var app = angular.module("app", ["checklist-model"]);
+app.controller('Ctrl2', function($scope) {
+  $scope.roles = [
+    {id: 1, text: 'guest'},
+    {id: 2, text: 'user'},
+    {id: 3, text: 'customer'},
+    {id: 4, text: 'admin'}
+  ];
+  $scope.user = {
+    roles: [2, 4]
+  };
+  $scope.checkAll = function() {
+    $scope.user.roles = $scope.roles.map(function(item) { return item.id; });
+  };
+  $scope.uncheckAll = function() {
+    $scope.user.roles = [];
+  };
+  $scope.checkFirst = function() {
+    $scope.user.roles.splice(0, $scope.user.roles.length); 
+    $scope.user.roles.push(1);
+  };
+});
+Array of objects (pick object)
+demo
+ guest
+ user
+ customer
+ admin
+Check all  Uncheck all  Check first
+user.roles
+[
+  {
+    "id": 2,
+    "text": "user"
+  }
+]
+html
+<label ng-repeat="role in roles">
+  <input type="checkbox" checklist-model="user.roles" checklist-value="role"> {{role.text}}
+</label>
+js
+var app = angular.module("app", ["checklist-model"]);
+app.controller('Ctrl3', function($scope) {
+  $scope.roles = [
+    {id: 1, text: 'guest'},
+    {id: 2, text: 'user'},
+    {id: 3, text: 'customer'},
+    {id: 4, text: 'admin'}
+  ];
+  $scope.user = {
+    roles: [$scope.roles[1]]
+  };
+  $scope.checkAll = function() {
+    $scope.user.roles = angular.copy($scope.roles);
+  };
+  $scope.uncheckAll = function() {
+    $scope.user.roles = [];
+  };
+  $scope.checkFirst = function() {
+    $scope.user.roles.splice(0, $scope.user.roles.length); 
+    $scope.user.roles.push($scope.roles[0]);
+  };
+});
+Object properties
+demo
+ Administrator
+ Customer
+ Guest
+ User
+Check all  Uncheck all  Check first
+user.roles
+[
+  "c"
+]
+html
+<label ng-repeat="(key, text) in roles">
+  <input type="checkbox" checklist-model="user.roles" checklist-value="key"> {{text}}
+</label>
+js
+var app = angular.module("app", ["checklist-model"]);
+app.controller('Ctrl4', function($scope) {
+  $scope.roles = {
+    g: 'Guest',
+    u: 'User',
+    c: 'Customer',
+    a: 'Administrator'
+  };
+  $scope.user = {
+    roles: ['c']
+  };
+  $scope.checkAll = function() {
+    $scope.user.roles = Object.keys($scope.roles);
+  };
+  $scope.uncheckAll = function() {
+    $scope.user.roles = [];
+  };
+  $scope.checkFirst = function() {
+    $scope.user.roles.splice(0, $scope.user.roles.length); 
+    $scope.user.roles.push('a');
+  };
+});
+If you have question or idea please feel free to open issue on github.
+© Vitaliy Potapov 2013. Released under the MIT license.
