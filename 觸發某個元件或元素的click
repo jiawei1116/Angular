@@ -1,0 +1,25 @@
+<div id="menuHidden">
+    <ul class="pager">
+        <li><a href="javascript:void(0)" class="glyphicon glyphicon-chevron-left">收合</a></li>
+    </ul>
+</div>
+
+//點選Menu的隱藏按鈕
+var menuPanel = $("#menuHidden").click(function () {
+    slide.reverse();
+    $("#picmenu").hide();
+    $("#mainFrame").removeClass('col-sm-10');
+    $("#mainFrame").attr('class', 'col-sm-12');
+    $("#mainFrame").css('margin-left', '0px');
+    $("#slide-in-content").show();
+});
+
+$scope.clickOnUpload = function () {
+  $timeout(function() {
+    angular.element('#myselector').trigger('click');
+  }, 100);
+};
+
+
+
+'#myselector' --> id名稱
